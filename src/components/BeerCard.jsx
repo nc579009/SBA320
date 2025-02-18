@@ -32,7 +32,7 @@ function BeerCard(beer) {
                 </div>
             </div>
             <div className="beer-card-content">
-                <h2>{beer.name}</h2>
+                <h2>{beer.title}</h2>
                 <p>{beer.description}</p>
             </div>
         </div>
