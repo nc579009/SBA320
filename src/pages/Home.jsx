@@ -1,12 +1,28 @@
 import BeerCard from '../components/BeerCard';
+import {useState, useEffect } from 'react';
+import { searchCocktail } from '../services/api';
+import { fetchCocktail } from '../services/api';
 
 
 function Home() {
     const [searchQuery,setSearchQuery] = useState('');
-}
+    const [beer, setBeer] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-function Home() {
-    const beer = { id:1 title: 'Pilsner', description: 'A light, golden beer with a mild flavor and a clean finish.', url: 'https://www.beeradvocate.com/im/beers/1.jpg' }
+    useEffect(() =>{
+        const loadfetchCocktail = async () => {
+            try{
+                const fetchcocktail = await fetchCocktail(searchQuery);
+                setBeer(fetchcocktail);
+            } catch (error){
+                console.error(error);
+            }
+            finally{
+                setLoading(false);
+            }
+        }
+    },[]);
 
 const handleselect = () => {
     e.preventDefault()
@@ -16,12 +32,12 @@ const handleselect = () => {
 
   return (
     <div className="Home">
-        <form onSubmit={handleselect className = "search-form">
+        <form onSubmit={handleselect} className="search-form">
             <input type="text" 
             placeholder="Search for a beer" 
             className="search-input"
             value={searchQuery}
-            onChange = {(e) => setSearchQuery(e.target.value}
+            onChange = {(e) => setSearchQuery(e.target.value)}
             />
             <button type="submit" className= "search-button">Search</button>
         </form>
